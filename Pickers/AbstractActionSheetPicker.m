@@ -378,6 +378,31 @@ CG_INLINE BOOL isIPhone4() {
     [self.customButtons addObject:buttonDetails];
 }
 
+
+- (void)addCustomButtonNext:(NSString *)size next:(NSString *)next{
+
+
+    NSDictionary *buttonDetails = @{
+                                    kButtonTitle : @"  >  ",
+                                    kActionType : @(ActionNext),
+                                    @"size": size,
+                                    @"next": next
+                                    };
+    [self.customButtons addObject:buttonDetails];
+}
+
+- (void)addCustomButtonPrevious:(NSString *)size previous:(NSString *)previous{
+
+
+    NSDictionary *buttonDetails = @{
+                                    kButtonTitle : @"  <  ",
+                                    kActionType : @(ActionPrevious),
+                                    @"size": size,
+                                    @"previous": previous
+                                    };
+    [self.customButtons addObject:buttonDetails];
+}
+
 - (IBAction)customButtonPressed:(id)sender {
     UIBarButtonItem *button = (UIBarButtonItem *) sender;
     NSInteger index = button.tag;
@@ -389,6 +414,8 @@ CG_INLINE BOOL isIPhone4() {
     ActionType actionType = (ActionType) [buttonDetails[kActionType] integerValue];
     switch (actionType) {
         case ActionTypeValue: {
+
+            NSLog(@"==== ActionTypeValue");
             NSAssert([self.pickerView respondsToSelector:@
             selector(selectRow:inComponent:animated:)], @"customButtonPressed not overridden, cannot interact with subclassed pickerView");
             NSInteger buttonValue = [buttonDetails[kButtonValue] integerValue];
@@ -404,7 +431,8 @@ CG_INLINE BOOL isIPhone4() {
 
         case ActionTypeBlock: {
             ActionBlock actionBlock = buttonDetails[kButtonValue];
-            [self dismissPicker];
+            //[self dismissPicker];
+            NSLog(@"==== ActionTypeBlock");
             if (actionBlock)
                 actionBlock();
             break;
@@ -421,6 +449,73 @@ CG_INLINE BOOL isIPhone4() {
             }
             break;
         }
+        case ActionNext: {
+            //ActionBlock actionBlock = buttonDetails[kButtonValue];
+            //[self dismissPicker];
+            NSLog(@"====* ActionNext");
+            //if (actionBlock)
+             //   actionBlock();
+
+            NSInteger next = [buttonDetails[@"next"] integerValue] ;
+            NSInteger size = [buttonDetails[@"size"] integerValue];
+
+
+            NSLog(@"====* ActionNext next:%li  size:%li", (long)next, (long)size);
+
+            if(next >= size){
+                next = size -1;
+            }else{
+                next +=1;
+            }
+
+            UIPickerView *picker = (UIPickerView *) self.pickerView;
+            NSAssert(picker != NULL, @"PickerView is invalid");
+            [picker selectRow:next inComponent:0 animated:YES];
+            NSLog(@"====ActionNext* %ld ",(long)next);
+
+            if ([self respondsToSelector:@selector(pickerView:didSelectRow:inComponent:)]) {
+                void (*objc_msgSendTyped)(id target, SEL _cmd, id pickerView, NSInteger row, NSInteger component) = (void *) objc_msgSend; // sending Integers as params
+                objc_msgSendTyped(self, @selector(pickerView:didSelectRow:inComponent:), picker, next, 0);
+                NSLog(@"====ActionNext* %ld ",(long)next);
+            }
+
+
+            break;
+        }
+        case ActionPrevious: {
+            //ActionBlock actionBlock = buttonDetails[kButtonValue];
+            //[self dismissPicker];
+            NSLog(@"====* ActionPrevious");
+            //if (actionBlock)
+            //   actionBlock();
+
+            NSInteger previous = [buttonDetails[@"previous"] integerValue] ;
+            NSInteger size = [buttonDetails[@"size"] integerValue];
+
+            NSLog(@"====* ActionPrevious previous:%li  size:%li", (long)previous, (long)size);
+
+            if(previous <= 0){
+                previous = 0;
+            }else{
+                previous -=1;
+            }
+
+
+            UIPickerView *picker = (UIPickerView *) self.pickerView;
+            NSAssert(picker != NULL, @"PickerView is invalid");
+            [picker selectRow:previous inComponent:0 animated:YES];
+            NSLog(@"====ActionPrevious* %ld ",(long)previous);
+
+            if ([self respondsToSelector:@selector(pickerView:didSelectRow:inComponent:)]) {
+                void (*objc_msgSendTyped)(id target, SEL _cmd, id pickerView, NSInteger row, NSInteger component) = (void *) objc_msgSend; // sending Integers as params
+                objc_msgSendTyped(self, @selector(pickerView:didSelectRow:inComponent:), picker, previous, 0);
+                NSLog(@"====ActionPrevious* %ld ",(long)previous);
+            }
+            
+            
+            break;
+        }
+            //ActionPrevious
 
         default:
             NSAssert(false, @"Unknown action type");

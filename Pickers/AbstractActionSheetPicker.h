@@ -41,7 +41,9 @@ _Pragma("clang diagnostic pop") \
 typedef NS_ENUM(NSInteger, ActionType) {
     ActionTypeValue,
     ActionTypeSelector,
-    ActionTypeBlock
+    ActionTypeBlock,
+    ActionNext,
+    ActionPrevious
 };
 
 typedef NS_ENUM(NSInteger, TapAction) {
@@ -109,6 +111,10 @@ static NSString *const kActionTarget = @"buttonActionTarget";
 
 // Adds custom buttons to the left of the UIToolbar that implement specified selector
 - (void)addCustomButtonWithTitle:(NSString *)title target:(id)target selector:(SEL)selector;
+
+// Adds custom buttons to the left of the UIToolbar that select next and previous values
+- (void)addCustomButtonNext:(NSString *)size next:(NSString *)next;
+- (void)addCustomButtonPrevious:(NSString *)size previous:(NSString *)previous;
 
 //For subclasses. This responds to a custom button being pressed.
 - (IBAction)customButtonPressed:(id)sender;

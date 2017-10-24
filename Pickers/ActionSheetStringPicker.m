@@ -128,6 +128,8 @@
         UILabel *labelSelected = (UILabel*)[pickerView viewForRow:row forComponent:component];
         [labelSelected setTextColor:  textColorSelectedIndex];
     }
+
+    NSLog(@"======= %ld",(long)row);
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -198,5 +200,10 @@
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     return pickerView.frame.size.width - 30;
 }
+
+//-(void)customButtonPressed:(id)sender{
+//    NSLog(@"==== %@",sender);
+//}
+
 
 @end
