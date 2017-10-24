@@ -34,6 +34,8 @@
 
 @implementation ActionSheetStringPicker
 
+@synthesize textColorSelectedIndex;
+
 + (instancetype)showPickerWithTitle:(NSString *)title rows:(NSArray *)strings initialSelection:(NSInteger)index doneBlock:(ActionStringDoneBlock)doneBlock cancelBlock:(ActionStringCancelBlock)cancelBlockOrNil origin:(id)origin {
     ActionSheetStringPicker * picker = [[ActionSheetStringPicker alloc] initWithTitle:title rows:strings initialSelection:index doneBlock:doneBlock cancelBlock:cancelBlockOrNil origin:origin];
     [picker showActionSheetPicker];
@@ -121,6 +123,11 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     self.selectedIndex = row;
+    
+    if(textColorSelectedIndex){
+        UILabel *labelSelected = (UILabel*)[pickerView viewForRow:row forComponent:component];
+        [labelSelected setTextColor:  textColorSelectedIndex];
+    }
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {

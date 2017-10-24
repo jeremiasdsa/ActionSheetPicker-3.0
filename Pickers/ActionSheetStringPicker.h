@@ -32,6 +32,12 @@ typedef void(^ActionStringDoneBlock)(ActionSheetStringPicker *picker, NSInteger 
 typedef void(^ActionStringCancelBlock)(ActionSheetStringPicker *picker);
 
 @interface ActionSheetStringPicker : AbstractActionSheetPicker <UIPickerViewDelegate, UIPickerViewDataSource>
+
+/**
+ * Update this param to set a custom text color for the current selected text on pickerView.
+ */
+@property (nonatomic,readwrite) UIColor * textColorSelectedIndex;
+
 /**
  *  Create and display an action sheet picker.
  *
