@@ -127,6 +127,8 @@ CG_INLINE BOOL isIPhone4() {
 
 @implementation AbstractActionSheetPicker
 
+@synthesize textColorNextPreviousButton;
+
 #pragma mark - Abstract Implementation
 
 - (instancetype)init {
@@ -180,6 +182,10 @@ CG_INLINE BOOL isIPhone4() {
     } else {
         self.pickerTextAttributes = [@{NSForegroundColorAttributeName : [UIColor whiteColor]} mutableCopy];
     }
+}
+
+- (void)setTextColorPreviousNextButton:(UIColor *)textColor {
+    textColorNextPreviousButton = textColor;
 }
 
 - (instancetype)initWithTarget:(id)target successAction:(SEL)successAction cancelAction:(SEL)cancelActionOrNil origin:(id)origin {
@@ -378,6 +384,22 @@ CG_INLINE BOOL isIPhone4() {
     [self.customButtons addObject:buttonDetails];
 }
 
+- (void)addNextButton{
+    NSDictionary *buttonDetails = @{
+                                    kButtonTitle : @"   >  ",
+                                    kActionType : @(ActionNext)
+                                    };
+    [self.customButtons addObject:buttonDetails];
+}
+
+-(void)addPreviousButton{
+    NSDictionary *buttonDetails = @{
+                                    kButtonTitle : @"  <   ",
+                                    kActionType : @(ActionPrevious)
+                                    };
+    [self.customButtons addObject:buttonDetails];
+}
+
 - (IBAction)customButtonPressed:(id)sender {
     UIBarButtonItem *button = (UIBarButtonItem *) sender;
     NSInteger index = button.tag;
@@ -497,7 +519,12 @@ CG_INLINE BOOL isIPhone4() {
                                                      target:self action:@selector(customButtonPressed:)];
 #pragma clang diagnostic pop
         }
-
+        
+        
+        if(textColorNextPreviousButton){
+            [button setTintColor:textColorNextPreviousButton];
+        }
+        
         button.tag = index;
         [barItems addObject:button];
         index++;

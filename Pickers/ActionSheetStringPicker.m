@@ -123,7 +123,6 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     self.selectedIndex = row;
-    
     if(textColorSelectedIndex){
         UILabel *labelSelected = (UILabel*)[pickerView viewForRow:row forComponent:component];
         [labelSelected setTextColor:  textColorSelectedIndex];
@@ -197,6 +196,37 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     return pickerView.frame.size.width - 30;
+}
+
+-(void)customButtonPressed:(id)sender{
+    UIBarButtonItem *button = (UIBarButtonItem *) sender;
+    NSInteger index = button.tag;
+    NSAssert((index >= 0 && index < self.customButtons.count), @"Bad custom button tag: %ld, custom button count: %lu", (long) index, (unsigned long) self.customButtons.count);
+    
+    NSDictionary *buttonDetails = (self.customButtons)[(NSUInteger) index];
+    NSAssert(buttonDetails != NULL, @"Custom button dictionary is invalid");
+    
+    ActionType actionType = (ActionType) [buttonDetails[kActionType] integerValue];
+    
+    if(actionType == ActionNext){
+        _selectedIndex +=1;
+        if(_selectedIndex>=self.data.count){
+            _selectedIndex = self.data.count-1;
+        }
+    }else if(ActionPrevious){
+        _selectedIndex -=1;
+        if(_selectedIndex<=0){
+            _selectedIndex=0;
+        }
+    }
+    NSLog(@"currentIndex %i", _selectedIndex);
+    NSInteger buttonValue = _selectedIndex;
+    UIPickerView *picker = (UIPickerView *) self.pickerView;
+    NSAssert(picker != NULL, @"PickerView is invalid");
+    [picker selectRow:buttonValue inComponent:0 animated:YES];
+    if ([self respondsToSelector:@selector(pickerView:didSelectRow:inComponent:)]) {
+        [self pickerView:self.pickerView didSelectRow:buttonValue inComponent:0];
+    }
 }
 
 @end
