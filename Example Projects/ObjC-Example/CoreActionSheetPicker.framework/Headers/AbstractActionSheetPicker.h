@@ -41,9 +41,7 @@ _Pragma("clang diagnostic pop") \
 typedef NS_ENUM(NSInteger, ActionType) {
     ActionTypeValue,
     ActionTypeSelector,
-    ActionTypeBlock,
-    ActionNext,
-    ActionPrevious
+    ActionTypeBlock
 };
 
 typedef NS_ENUM(NSInteger, TapAction) {
@@ -84,10 +82,9 @@ static NSString *const kActionTarget = @"buttonActionTarget";
 @property(nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations; // You can set your own supportedInterfaceOrientations value to prevent dismissing picker in some special cases.
 @property(nonatomic) TapAction tapDismissAction; // Specify, which action should be fired in case of tapping outside of the picker (on top darkened side). Default is TapActionNone.
 @property(nonatomic) BOOL popoverDisabled; // Disable popover behavior on iPad
-@property (nonatomic,readwrite) UIColor * textColorNextPreviousButton;//Next and Previous buttons color.
+
 
 - (void)setTextColor:(UIColor *)textColor;
-- (void)setTextColorPreviousNextButton:(UIColor *)textColor;
 
 // For subclasses.
 - (instancetype)initWithTarget:(id)target successAction:(SEL)successAction cancelAction:(SEL)cancelActionOrNil origin:(id)origin;
@@ -112,12 +109,6 @@ static NSString *const kActionTarget = @"buttonActionTarget";
 
 // Adds custom buttons to the left of the UIToolbar that implement specified selector
 - (void)addCustomButtonWithTitle:(NSString *)title target:(id)target selector:(SEL)selector;
-
-// Adds a button do scroll down the pickerView.
-- (void)addNextButton;
-
-// Adds a button do scroll up the pickerView.
-- (void)addPreviousButton;
 
 //For subclasses. This responds to a custom button being pressed.
 - (IBAction)customButtonPressed:(id)sender;

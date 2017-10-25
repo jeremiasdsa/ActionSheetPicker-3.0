@@ -43,8 +43,20 @@
     ActionStringCancelBlock cancel = ^(ActionSheetStringPicker *picker) {
         NSLog(@"Block Picker Canceled");
     };
+    
+    
     NSArray *colors = @[@"Red", @"Green", @"Blue", @"Orange"];
-    ActionSheetStringPicker* picker = [[ActionSheetStringPicker alloc] initWithTitle:@"Select a Block" rows:colors initialSelection:0 doneBlock:done cancelBlock:cancel origin:sender];
+    ActionSheetStringPicker* picker = [[ActionSheetStringPicker alloc] initWithTitle:@"" rows:colors initialSelection:0 doneBlock:done cancelBlock:cancel origin:sender];
+    
+    
+    
+    
+    
+    [picker addPreviousButton];
+    [picker addNextButton];
+    [picker setTextColorPreviousNextButton:[UIColor redColor]];
+    
+    picker.hideCancel = YES;
     picker.tapDismissAction = TapActionCancel;
     [picker showActionSheetPicker];
     [picker setTextColor:[UIColor grayColor]];
