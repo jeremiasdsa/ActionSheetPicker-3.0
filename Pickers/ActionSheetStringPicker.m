@@ -30,6 +30,7 @@
 @interface ActionSheetStringPicker()
 @property (nonatomic,strong) NSArray *data;
 @property (nonatomic,assign) NSInteger selectedIndex;
+@property BOOL firstTime;
 @end
 
 @implementation ActionSheetStringPicker
@@ -170,28 +171,88 @@
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+
     UILabel *pickerLabel = (UILabel *)view;
+
     if (pickerLabel == nil) {
+
         pickerLabel = [[UILabel alloc] init];
+
     }
+
     id obj = (self.data)[(NSUInteger) row];
-    
+
+
+
     NSAttributedString *attributeTitle = nil;
+
     // use the object if it is already a NSString,
+
     // otherwise, use the description, just like the toString() method in Java
+
     // else, use String with no text to ensure this delegate do not return a nil value.
-    
+
+
+
     if ([obj isKindOfClass:[NSString class]])
+
         attributeTitle = [[NSAttributedString alloc] initWithString:obj attributes:self.pickerTextAttributes];
-    
+
+
+
     if ([obj respondsToSelector:@selector(description)])
+
         attributeTitle = [[NSAttributedString alloc] initWithString:[obj performSelector:@selector(description)] attributes:self.pickerTextAttributes];
-    
+
+
+
     if (attributeTitle == nil) {
+
         attributeTitle = [[NSAttributedString alloc] initWithString:@"" attributes:self.pickerTextAttributes];
+
     }
+
     pickerLabel.attributedText = attributeTitle;
+
+
+
+    if(_firstTime){
+
+
+        NSMutableParagraphStyle *labelParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+
+        labelParagraphStyle.alignment = NSTextAlignmentCenter;
+
+        NSMutableDictionary *pickerTextAttributes = [@{NSParagraphStyleAttributeName : labelParagraphStyle} mutableCopy];
+
+
+        pickerTextAttributes[NSForegroundColorAttributeName] = textColorSelectedIndex;
+
+        attributeTitle = [[NSAttributedString alloc] initWithString:[obj performSelector:@selector(description)] attributes:pickerTextAttributes];
+
+        pickerLabel.attributedText = attributeTitle;
+        
+
+
+        
+        _firstTime = NO;
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    NSLog(@"====== reusingView");
+    
+    
+    
     return pickerLabel;
+    
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
@@ -227,6 +288,11 @@
     if ([self respondsToSelector:@selector(pickerView:didSelectRow:inComponent:)]) {
         [self pickerView:self.pickerView didSelectRow:buttonValue inComponent:0];
     }
+}
+
+-(void)showActionSheetPicker{
+    [super showActionSheetPicker];
+    _firstTime = YES;
 }
 
 @end
