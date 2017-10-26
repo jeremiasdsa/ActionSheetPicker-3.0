@@ -48,9 +48,9 @@
     NSArray *colors = @[@"Red", @"Green", @"Blue", @"Orange"];
     ActionSheetStringPicker* picker = [[ActionSheetStringPicker alloc] initWithTitle:@"" rows:colors initialSelection:0 doneBlock:done cancelBlock:cancel origin:sender];
     
+    [picker setTextColorSelectedIndex:[UIColor greenColor]];
     
-    
-    
+    [picker configuredPickerView];
     
     [picker addPreviousButton];
     [picker addNextButton];
@@ -60,7 +60,12 @@
     picker.tapDismissAction = TapActionCancel;
     [picker showActionSheetPicker];
     [picker setTextColor:[UIColor grayColor]];
-    [picker setTextColorSelectedIndex:[UIColor greenColor]];
+    picker.pickerBackgroundColor = [UIColor whiteColor];
+
+
+    //[picker clickEmulate];
+    
+
 }
 
 /*

@@ -307,6 +307,8 @@ CG_INLINE BOOL isIPhone4() {
     }
 #pragma clang diagnostic pop
 
+    NSLog(@"==== pai showActionSheetPicker");
+
 }
 
 - (IBAction)actionPickerDone:(id)sender {

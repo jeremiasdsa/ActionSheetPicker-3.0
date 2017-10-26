@@ -188,6 +188,7 @@ static const enum UIViewAnimationOptions options = UIViewAnimationOptionCurveEas
 {
     [super viewWillAppear:animated];
     [self presentActionSheetAnimated:YES];
+    NSLog(@"===== VIEW WILL");
 }
 
 - (void)presentActionSheetAnimated:(BOOL)animated
@@ -216,6 +217,12 @@ static const enum UIViewAnimationOptions options = UIViewAnimationOptionCurveEas
 - (BOOL)shouldAutorotate
 {
     return YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    NSLog(@"===== VIEW DID");
+
 }
 
 @end

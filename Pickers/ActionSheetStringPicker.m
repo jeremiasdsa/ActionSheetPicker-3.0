@@ -30,6 +30,7 @@
 @interface ActionSheetStringPicker()
 @property (nonatomic,strong) NSArray *data;
 @property (nonatomic,assign) NSInteger selectedIndex;
+@property BOOL firstTime;
 @end
 
 @implementation ActionSheetStringPicker
@@ -63,6 +64,7 @@
         self.data = data;
         self.selectedIndex = index;
         self.title = title;
+
     }
     return self;
 }
@@ -71,6 +73,7 @@
 - (UIView *)configuredPickerView {
     if (!self.data)
         return nil;
+
     CGRect pickerFrame = CGRectMake(0, 40, self.viewSize.width, 216);
     UIPickerView *stringPicker = [[UIPickerView alloc] initWithFrame:pickerFrame];
     stringPicker.delegate = self;
@@ -82,10 +85,20 @@
     } else {
         stringPicker.showsSelectionIndicator = YES;
         stringPicker.userInteractionEnabled = YES;
+
+
+
     }
 
     //need to keep a reference to the picker so we can clear the DataSource / Delegate when dismissing
     self.pickerView = stringPicker;
+
+
+    UIPickerView *picker = (UIPickerView *) self.pickerView;
+    [picker selectRow:0 inComponent:0 animated:YES];
+    if ([self respondsToSelector:@selector(pickerView:didSelectRow:inComponent:)]) {
+        [self pickerView:self.pickerView didSelectRow:0 inComponent:0];
+    }
 
     return stringPicker;
 }
@@ -124,6 +137,7 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     self.selectedIndex = row;
     if(textColorSelectedIndex){
+        NSLog(@"=== didSelectRow");
         UILabel *labelSelected = (UILabel*)[pickerView viewForRow:row forComponent:component];
         [labelSelected setTextColor:  textColorSelectedIndex];
     }
@@ -149,6 +163,8 @@
 
     if ([obj respondsToSelector:@selector(description)])
         return [obj performSelector:@selector(description)];
+
+    NSLog(@"====== titleForRow");
     
     return nil;
 }
@@ -165,7 +181,9 @@
     
     if ([obj respondsToSelector:@selector(description)])
         return [[NSAttributedString alloc] initWithString:[obj performSelector:@selector(description)] attributes:self.pickerTextAttributes];
-    
+
+    NSLog(@"====== attributedTitleForRow");
+
     return nil;
 }
 
@@ -191,6 +209,44 @@
         attributeTitle = [[NSAttributedString alloc] initWithString:@"" attributes:self.pickerTextAttributes];
     }
     pickerLabel.attributedText = attributeTitle;
+
+
+
+//        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 44)];
+//        label.backgroundColor = [UIColor blueColor];
+//        label.textColor = [UIColor yellowColor];
+//        label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:18];
+//        label.text = [NSString stringWithFormat:@" %d", row+1];
+//
+//        if(_firstTime){
+//            NSLog(@"====== first time");
+//            label.textColor = [UIColor redColor];
+//            _firstTime = NO;
+//        }
+//
+//    return label;
+
+    if(_firstTime){
+
+
+        NSMutableParagraphStyle *labelParagraphStyle = [[NSMutableParagraphStyle alloc] init];
+        labelParagraphStyle.alignment = NSTextAlignmentCenter;
+        NSMutableDictionary *pickerTextAttributes = [@{NSParagraphStyleAttributeName : labelParagraphStyle} mutableCopy];
+
+        pickerTextAttributes[NSForegroundColorAttributeName] = [UIColor redColor];
+        attributeTitle = [[NSAttributedString alloc] initWithString:[obj performSelector:@selector(description)] attributes:pickerTextAttributes];
+
+        pickerLabel.attributedText = attributeTitle;
+                    NSLog(@"====== first time");
+                   // label.textColor = [UIColor redColor];
+                    _firstTime = NO;
+      }
+
+
+
+
+    NSLog(@"====== reusingView");
+
     return pickerLabel;
 }
 
@@ -227,6 +283,34 @@
     if ([self respondsToSelector:@selector(pickerView:didSelectRow:inComponent:)]) {
         [self pickerView:self.pickerView didSelectRow:buttonValue inComponent:0];
     }
+}
+
+
+-(void)clickEmulate{
+
+    //UIBarButtonItem *button = (UIBarButtonItem *) sender;
+    _selectedIndex -=1;
+    if(_selectedIndex<=0){
+        _selectedIndex=0;
+    }
+
+    NSLog(@"clickEmulate currentIndex %i", _selectedIndex);
+    NSInteger buttonValue = _selectedIndex;
+    UIPickerView *picker = (UIPickerView *) self.pickerView;
+    NSAssert(picker != NULL, @"PickerView is invalid");
+    [picker selectRow:buttonValue inComponent:0 animated:YES];
+    if ([self respondsToSelector:@selector(pickerView:didSelectRow:inComponent:)]) {
+        [self pickerView:self.pickerView didSelectRow:buttonValue inComponent:0];
+    }
+    
+
+}
+
+-(void)showActionSheetPicker{
+    [super showActionSheetPicker];
+    [self clickEmulate];
+    self.firstTime = YES;
+
 }
 
 @end

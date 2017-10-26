@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>.DS_Store</key>
-		<data>
-		b5f+pzkJZwnwQGvYXAKyP79aUKw=
-		</data>
 		<key>Headers/AbstractActionSheetPicker.h</key>
 		<data>
 		luVbfHtMnk2vVuYwM6qgL9WfiIc=
@@ -42,7 +38,7 @@
 		</data>
 		<key>Headers/ActionSheetStringPicker.h</key>
 		<data>
-		faN9xl3WbcrpQZiGSBIZ8VtjaDc=
+		ON7WWpEhMRkCn9OXEmbWOWOtPYU=
 		</data>
 		<key>Headers/CoreActionSheetPicker.h</key>
 		<data>
@@ -54,7 +50,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		LLRraGI03woyv2piojPTENFYV34=
+		+vAC4kcwMdl+tE6TScJSKcurhWE=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -155,11 +151,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			faN9xl3WbcrpQZiGSBIZ8VtjaDc=
+			ON7WWpEhMRkCn9OXEmbWOWOtPYU=
 			</data>
 			<key>hash2</key>
 			<data>
-			2Vx2kkszpwcQbSXPu5sfKdb/uJzwsk1aTfCIXnkJps0=
+			1GKYr10XrHhrWz5+OcfjlPIDXa8WFC9MJEm+gc0Gg0s=
 			</data>
 		</dict>
 		<key>Headers/CoreActionSheetPicker.h</key>
