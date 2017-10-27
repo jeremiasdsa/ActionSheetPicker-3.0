@@ -183,7 +183,6 @@
     id obj = (self.data)[(NSUInteger) row];
 
 
-
     NSAttributedString *attributeTitle = nil;
 
     // use the object if it is already a NSString,
@@ -197,7 +196,6 @@
     if ([obj isKindOfClass:[NSString class]])
 
         attributeTitle = [[NSAttributedString alloc] initWithString:obj attributes:self.pickerTextAttributes];
-
 
 
     if ([obj respondsToSelector:@selector(description)])
@@ -215,9 +213,7 @@
     pickerLabel.attributedText = attributeTitle;
 
 
-
-    if(_firstTime){
-
+    if(_firstTime && row == _selectedIndex){
 
         NSMutableParagraphStyle *labelParagraphStyle = [[NSMutableParagraphStyle alloc] init];
 
@@ -225,32 +221,15 @@
 
         NSMutableDictionary *pickerTextAttributes = [@{NSParagraphStyleAttributeName : labelParagraphStyle} mutableCopy];
 
-
         pickerTextAttributes[NSForegroundColorAttributeName] = textColorSelectedIndex;
 
         attributeTitle = [[NSAttributedString alloc] initWithString:[obj performSelector:@selector(description)] attributes:pickerTextAttributes];
 
         pickerLabel.attributedText = attributeTitle;
-        
 
-
-        
         _firstTime = NO;
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    NSLog(@"====== reusingView");
-    
-    
-    
+
     return pickerLabel;
     
 }
