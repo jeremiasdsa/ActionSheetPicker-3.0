@@ -4,10 +4,6 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>.DS_Store</key>
-		<data>
-		b5f+pzkJZwnwQGvYXAKyP79aUKw=
-		</data>
 		<key>Headers/AbstractActionSheetPicker.h</key>
 		<data>
 		luVbfHtMnk2vVuYwM6qgL9WfiIc=
@@ -54,7 +50,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		LLRraGI03woyv2piojPTENFYV34=
+		+vAC4kcwMdl+tE6TScJSKcurhWE=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>

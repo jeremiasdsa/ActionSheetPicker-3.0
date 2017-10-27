@@ -46,7 +46,7 @@
     
     
     NSArray *colors = @[@"Red", @"Green", @"Blue", @"Orange"];
-    ActionSheetStringPicker* picker = [[ActionSheetStringPicker alloc] initWithTitle:@"" rows:colors initialSelection:0 doneBlock:done cancelBlock:cancel origin:sender];
+    ActionSheetStringPicker* picker = [[ActionSheetStringPicker alloc] initWithTitle:@"" rows:colors initialSelection:3 doneBlock:done cancelBlock:cancel origin:sender];
     
     
     
